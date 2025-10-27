@@ -1,0 +1,46 @@
+\documentclass[12pt]{article}
+\usepackage{myfullpage}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{url}
+\usepackage{color}
+\usepackage{graphicx}
+
+\usepackage{times}
+\usepackage{sectsty}
+\usepackage{xcolor}
+\usepackage{esvect}
+
+\sectionfont{\normalsize\bf}
+\subsectionfont{\normalsize\bf}
+\usepackage{listings}
+\lstset{
+  language=bash,
+  basicstyle=\ttfamily
+}
+
+
+\input defs.tex
+
+\setlength{\headheight}{14.5pt}
+
+\pagestyle{fancyplain}
+\rhead{Instructor: Mo Chen}
+\lhead{CMPT 726: Assignment 1 Solutions}
+
+\begin{document}
+
+
+\subsection*{Assignment 1 Solutions}
+
+\section{Convexity and Linear Algebra}
+\input{solutions/convexity_sol}
+
+\section{SVD and Eigendecomposition}
+\input{solutions/svd_sol}
+
+\input{solutions/new_convexity}
+
+
+\end{document}

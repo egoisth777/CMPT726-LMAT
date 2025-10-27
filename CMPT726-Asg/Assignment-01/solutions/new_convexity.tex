@@ -1,0 +1,167 @@
+\section{Convexity}
+
+\begin{enumerate}
+    \item \textbf{Solution:}
+    
+    We need to prove that the Huber loss function with parameter $\delta > 0$:
+    \[
+    \text{Huber}_\delta(x) := \begin{cases}
+    \frac{1}{2}x^2, & |x| \leq \delta, \\
+    \delta|x| - \frac{1}{2}\delta^2, & |x| > \delta,
+    \end{cases}
+    \]
+    is convex using only the definition of convex functions.
+    
+    To prove convexity, we need to show that for any $x, y \in \mathbb{R}$ and any $t \in [0,1]$:
+    \[
+    \text{Huber}_\delta(tx + (1-t)y) \leq t\cdot\text{Huber}_\delta(x) + (1-t)\cdot\text{Huber}_\delta(y)
+    \]
+    
+    We consider four cases based on the values of $x$ and $y$:
+    
+    \textbf{Case 1:} $|x| \leq \delta$ and $|y| \leq \delta$
+    
+    In this case, we need to check if $|tx + (1-t)y| \leq \delta$.
+    \begin{align*}
+    |tx + (1-t)y| &\leq t|x| + (1-t)|y| \quad \text{(triangle inequality)}\\
+    &\leq t\delta + (1-t)\delta = \delta
+    \end{align*}
+    
+    Therefore, all three points fall in the quadratic region:
+    \begin{align*}
+    \text{Huber}_\delta(tx + (1-t)y) &= \frac{1}{2}(tx + (1-t)y)^2 \\
+    &\leq t\cdot\frac{1}{2}x^2 + (1-t)\cdot\frac{1}{2}y^2 \quad \text{(convexity of $\frac{1}{2}x^2$)}\\
+    &= t\cdot\text{Huber}_\delta(x) + (1-t)\cdot\text{Huber}_\delta(y)
+    \end{align*}
+    
+    \textbf{Case 2:} $|x| > \delta$ and $|y| > \delta$, with $x$ and $y$ having the same sign
+    
+    Without loss of generality, assume $x, y > \delta$. Then $tx + (1-t)y > \delta$ for $t \in [0,1]$.
+    \begin{align*}
+    \text{Huber}_\delta(tx + (1-t)y) &= \delta(tx + (1-t)y) - \frac{1}{2}\delta^2 \\
+    &= t(\delta x - \frac{1}{2}\delta^2) + (1-t)(\delta y - \frac{1}{2}\delta^2) \\
+    &= t\cdot\text{Huber}_\delta(x) + (1-t)\cdot\text{Huber}_\delta(y)
+    \end{align*}
+    The function is linear in this region, so the inequality holds with equality.
+    
+    \textbf{Case 3:} $|x| > \delta$ and $|y| > \delta$, with $x$ and $y$ having opposite signs
+    
+    Let $x > \delta$ and $y < -\delta$. Then $tx + (1-t)y$ may fall in any region. We have:
+    \begin{align*}
+    t\cdot\text{Huber}_\delta(x) + (1-t)\cdot\text{Huber}_\delta(y) &= t(\delta x - \frac{1}{2}\delta^2) + (1-t)(\delta(-y) - \frac{1}{2}\delta^2) \\
+    &= t\delta x - (1-t)\delta y - \frac{1}{2}\delta^2
+    \end{align*}
+    
+    Since the Huber function is convex on each piece and continuous at the boundary, the convexity property holds.
+    
+    \textbf{Case 4:} One point inside $[-\delta, \delta]$ and one outside
+    
+    By the continuity of the Huber function at $\pm\delta$ and the convexity of each piece, the overall function remains convex.
+    
+    Therefore, $\text{Huber}_\delta(x)$ is convex for all $\delta > 0$.
+    
+    \item \textbf{Solution:}
+    
+    We need to prove that 
+    \[
+    f(\vec{x}) = \|A\vec{x} + \vec{b}\|_2 + \lambda\|\vec{x}\|_\infty
+    \]
+    is convex, where $A \in \mathbb{R}^{n \times n}$, $\vec{x} \in \mathbb{R}^n$, $\vec{b} \in \mathbb{R}^n$, and $\lambda \geq 0$.
+    
+    \textbf{Step 1: Show that any norm is convex}
+    
+    Let $\|\cdot\|$ be any norm. For any $\vec{u}, \vec{v}$ and $t \in [0,1]$:
+    \begin{align*}
+    \|t\vec{u} + (1-t)\vec{v}\| &\leq \|t\vec{u}\| + \|(1-t)\vec{v}\| \quad \text{(triangle inequality)}\\
+    &= t\|\vec{u}\| + (1-t)\|\vec{v}\| \quad \text{(positive homogeneity)}
+    \end{align*}
+    
+    Therefore, any norm is a convex function. In particular, both $\|\cdot\|_2$ and $\|\cdot\|_\infty$ are convex.
+    
+    \textbf{Step 2: Show $\|A\vec{x} + \vec{b}\|_2$ is convex}
+    
+    Let $g(\vec{x}) = A\vec{x} + \vec{b}$. This is an affine transformation. Let $h(\vec{z}) = \|\vec{z}\|_2$, which is convex by Step 1.
+    
+    Then $\|A\vec{x} + \vec{b}\|_2 = h(g(\vec{x}))$.
+    
+    Using the property that $f(A\vec{x} + \vec{b})$ is convex if $f$ is convex (composition of convex function with affine transformation), we have that $\|A\vec{x} + \vec{b}\|_2$ is convex.
+    
+    \textbf{Step 3: Show $\|\vec{x}\|_\infty$ is convex}
+    
+    From Step 1, $\|\vec{x}\|_\infty$ is convex.
+    
+    \textbf{Step 4: Combine using the property of weighted sums}
+    
+    We have:
+    \begin{itemize}
+        \item $\|A\vec{x} + \vec{b}\|_2$ is convex (Step 2)
+        \item $\|\vec{x}\|_\infty$ is convex (Step 3)
+        \item $\lambda \geq 0$ (given)
+    \end{itemize}
+    
+    Using the property that $\sum_i w_i f_i(\vec{x})$ is convex if $f_i$ are convex and $w_i \geq 0$, we have:
+    \[
+    f(\vec{x}) = \underbrace{\|A\vec{x} + \vec{b}\|_2}_{\text{convex}} + \underbrace{\lambda}_{\geq 0} \cdot \underbrace{\|\vec{x}\|_\infty}_{\text{convex}}
+    \]
+    is convex.
+    
+    Therefore, $f(\vec{x}) = \|A\vec{x} + \vec{b}\|_2 + \lambda\|\vec{x}\|_\infty$ is convex.
+    
+    \item \textbf{Solution:}
+    
+    We need to prove that the Swish activation function 
+    \[
+    f(x) = x\sigma(x) = \frac{x}{1 + e^{-x}}
+    \]
+    is neither convex nor concave on $\mathbb{R}$.
+    
+    To show that $f$ is neither convex nor concave, we will compute $f''(x)$ and show that it changes sign.
+    
+    \textbf{Step 1: Compute $f'(x)$}
+    
+    Given that $\sigma'(x) = \sigma(x)(1 - \sigma(x))$, we use the product rule and since \(\sigma^{'}(x) = \sigma(x)(1 - \sigma(x))\)
+    \begin{align*}
+        f^{\prime}(x) &= \sigma(x) + x \sigma^{\prime}(x)\\
+                      &= \sigma(x) + \sigma(x)(1 - \sigma(x))x
+    \end{align*}
+    
+    \textbf{Step 2: Compute $f^{\prime \prime}(x)$}
+    \begin{align*}
+        &f^{\prime \prime}(x)=\sigma^{\prime}(x)+\frac{d}{d x}\left(x \sigma^{\prime}(x)\right)=\sigma^{\prime}(x)+\left(\sigma^{\prime}(x)+x \sigma^{\prime \prime}(x)\right)\\
+        &f^{\prime \prime}(x)=2 \sigma^{\prime}(x)+x \sigma^{\prime \prime}(x)
+    \end{align*}
+    Now we find $\sigma^{\prime \prime}(x)$ by differentiating $\sigma^{\prime}(x)=\sigma(x)-\sigma(x)^2$ :
+
+    $$
+    \sigma^{\prime \prime}(x)=\sigma^{\prime}(x)-2 \sigma(x) \sigma^{\prime}(x)=\sigma^{\prime}(x)(1-2 \sigma(x))
+    $$
+    
+    Substitute this back into the expression for $f^{\prime \prime}(x)$ :
+
+        The term $\sigma^{\prime}(x)=\sigma(x)(1-\sigma(x))$ is always positive because $\sigma(x) \in(0,1)$ for all $x \in \mathbb{R}$.
+        Therefore, the sign of $f^{\prime \prime}(x)$ is determined by the sign of the term $S(x)=2+x(1-2 \sigma(x))$.
+        Let's test the sign of $S(x)$ at two different points:
+        - At $x=0$ :
+
+        $$
+        \begin{aligned}
+        & \sigma(0)=\frac{1}{1+e^0}=\frac{1}{2} \\
+        & S(0)=2+0\left(1-2\left(\frac{1}{2}\right)\right)=2
+        \end{aligned}
+        $$
+
+
+        Since $S(0)=2>0$, we have $f^{\prime \prime}(0)>0$.
+        - As $x \rightarrow \infty$ :
+
+        As $x$ becomes very large, $e^{-x} \rightarrow 0$, so $\sigma(x) \rightarrow 1$.
+        The term $(1-2 \sigma(x))$ approaches $1-2(1)=-1$.
+        So, for large positive $x, S(x) \approx 2+x(-1)=2-x$. This value is negative for $x>2$. For example, at $x=5, S(5) \approx-3<0$, which means $f^{\prime \prime}(5)<0$.
+
+        Since we have found a point where $f^{\prime \prime}(x)>0$ (e.g., $x=0$ ) and a point where $f^{\prime \prime}(x)<0$ (e.g., $x=5$ ), the second derivative changes sign.
+    
+    Since $f''(x)$ changes sign on $\mathbb{R}$, the function $f$ is neither convex (which would require $f''(x) \geq 0$) nor concave (which would require $f''(x) \leq 0$) on $\mathbb{R}$.
+    
+    Therefore, the Swish activation function is neither convex nor concave on $\mathbb{R}$.
+    
+\end{enumerate}

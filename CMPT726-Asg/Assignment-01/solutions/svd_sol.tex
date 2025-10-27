@@ -1,0 +1,189 @@
+\begin{enumerate}
+    \item \textbf{Solution:}
+        \[
+            B = \begin{bmatrix}
+                    1 & 0\\
+                    2 & 1\\
+                    0 & 1
+              \end{bmatrix} 
+              \begin{bmatrix}
+                    1 & 2 & 0\\ 
+                    0 & 1 & 1
+              \end{bmatrix} = 
+              \begin{bmatrix}
+                  1 & 2 & 0\\      
+                  2 & 5 & 1\\
+                  0 & 1 & 1
+              \end{bmatrix}
+        \]
+    \item \textbf{Solution:}
+        To prove that the given form is the eigendecomposition of \(B = U \Lambda U^T\)
+        We must first compute the eigenvalues of \(B\):\\
+        By solving the linear equation:
+        \[
+            B - \lambda I = 0
+        \]
+        the eigenvalues of \(B\) are:\\
+        \(\lambda_{1} = 6, \lambda{2} = 1, \lambda_{3} = 0 \) \\
+        
+        Now, the quick way to verify the above matrix decomposition is an egigendecomposition of \(B\), is that 
+        we check each column of alleged \(U\), denoted by \(u_i\), wether for each \(u_i\), we have the following equation holds:\\
+        \[
+            \Lambda u_i = \lambda_i p_i
+        \]
+        Now, let's check if this entity holds one by one:\\
+        \begin{itemize}
+            \item \( \lambda_1 = 6 , u_1 = \frac{1}{\sqrt{30}}\begin{bmatrix}
+                -2 \\ -5 \\ -1
+              \end{bmatrix} \):\\
+            \[
+                \Lambda u_1 = 
+                \begin{bmatrix}
+                     1 & 2 & 0 \\
+                     2 & 5 & 1 \\
+                     0 & 1 & 1 
+                \end{bmatrix} \frac{1}{\sqrt{30}} 
+                \begin{bmatrix}
+                    -2 \\ -5 \\ 1
+                \end{bmatrix} = \frac{1}{\sqrt{30}}\begin{bmatrix}
+                    -12 \\ -30 \\ 6
+                  \end{bmatrix}
+            \]
+            \[
+                \lambda_1 u_1 = \frac{1}{\sqrt{30}} \begin{bmatrix}
+                    -12 \\ -30 \\ 6
+                  \end{bmatrix}
+            \]
+            Therefore,\(\Lambda u_1 = \lambda_1 u_1\)
+        \item \( \lambda_2 = 1 , u_2 = \frac{1}{\sqrt{5}}\begin{bmatrix}
+                1 \\ 0 \\ -2
+              \end{bmatrix} \):\\
+            \[
+                \Lambda u_2 = 
+                \begin{bmatrix}
+                     1 & 2 & 0 \\
+                     2 & 5 & 1 \\
+                     0 & 1 & 1 
+                \end{bmatrix} \frac{1}{\sqrt{5}} 
+                \begin{bmatrix}
+                    1 \\ 0 \\ -2
+                \end{bmatrix} = \frac{1}{\sqrt{5}}\begin{bmatrix}
+                    2 \\ 0 \\ -2
+                \end{bmatrix}
+            \]
+            \[
+                \lambda_2 u_2 = \frac{1}{\sqrt{5}} \begin{bmatrix}
+                    2 \\ 0 \\ -2
+                  \end{bmatrix}
+            \]
+            Therefore,\(\Lambda u_2 = \lambda_2 u_2\)
+            
+        \item \( \lambda_3 = 0 , u_3 = \frac{1}{\sqrt{6}}\begin{bmatrix}
+                2 \\ -1 \\ 1
+              \end{bmatrix} \):\\
+            \[
+                \Lambda u_3 = 
+                \begin{bmatrix}
+                     1 & 2 & 0 \\
+                     2 & 5 & 1 \\
+                     0 & 1 & 1 
+                \end{bmatrix} \frac{1}{\sqrt{6}} 
+                \begin{bmatrix}
+                    2 \\ -1 \\ 1
+                \end{bmatrix} = \frac{1}{\sqrt{6}}\begin{bmatrix}
+                    0 \\ 0 \\ 0
+                \end{bmatrix}
+            \]
+            \[
+                \lambda_3 u_3 = \frac{1}{\sqrt{6}} \begin{bmatrix}
+                    0 \\ 0 \\ 0
+                  \end{bmatrix}
+            \]
+            Therefore,\(\Lambda u_3 = \lambda_3 u_3\)
+            Therefore, now we can verify that the above matrix is the eigendecomposition of matrix \(B\)
+        \end{itemize}
+    \item \textbf{Solution:}
+        Since the \textbf{singular values} of matrix \(A\) denoted as \(\sigma_i\) are the square roots of the non-zero
+        eigenvalues of matrix \( AA^T \) \\
+        Since we have found the eigenvalues of \(B = A A^T\):\\
+        \(\lambda_{1} = 6, \lambda{2} = 1, \lambda_{3} = 0 \) \\
+        We now can calculate the singular values of \(A\) by taking the square root of non-zero eigenvalues of \(B\):\\
+        \[
+            \sigma_1 = \sqrt{6},
+            \sigma_2 = \sqrt{1}
+        \] 
+        Therefore, we can construct 
+        \[
+        \Sigma = \begin{bmatrix}
+            \sigma_1 & 0 \\
+            0 & \sigma_2\\
+            0 & 0
+          \end{bmatrix} = \begin{bmatrix}
+            \sqrt{6} & 0\\
+            0 & 1\\
+            0 & 0
+            \end{bmatrix}
+        \] 
+        
+        
+        
+    \item \textbf{Solution:}
+        \begin{itemize}
+            \item For \(U\):
+                first, we prove that \(U\) is orthogonal:\\
+                For columns of \(U\), we check whether \(u_1 \cdot u_2 = 0\)
+                \[
+                    (1/2 , \sqrt{3}/2) (-\sqrt(3) / 2 , 1/2) = 0
+                \] 
+                Then we check the determinant, whether \(\text{det}(U) = 1\)
+                \[
+                    \text{det}(U) = 1/4 + 3/4 = 1
+                \]
+                Therefore, basis vectors of transformation is orthonormal, the matrix \(U\) is a rotation matrix
+            \item For \(V\):
+                first, we prove that \(V\) is orthogonal:\\
+                For columns of \(V\), we check whether \(u_1 \cdot u_2 = 0\)
+                \[
+                    (\sqrt{2}/2 , \sqrt{2}/2) (-\sqrt(2) / 2 , \sqrt{2}/2) = 0
+                \]
+                Then we check the determinant, whether \(\text{det}(V) = 1\)
+                \[
+                    \text{det}(V) = 1/2 + 1/2 = 1
+                \]
+                Therefore, basis vectors of transformation is orthonormal, the matrix \(V\) is a rotation matrix, \(V^T\) is also a rotation matrix by 
+                rotation matrix's property
+        \end{itemize}
+        Now we compute the rotation angles for \(U\) and \(V\):
+        \begin{itemize}
+            \item for \( U\):
+                \(\theta_u = \frac{\pi}{3}\)\\
+                \[
+                    U =\begin{bmatrix}
+                        \cos(\frac{\pi}{3}) & -\sin(\frac{\pi}{3})\\
+                        \sin(\frac{\pi}{3}) & -\cos(\frac{\pi}{3})\\
+                      \end{bmatrix}
+                     = \begin{bmatrix}
+                         \frac{1}{2} & -\frac{\sqrt{3}}{2} \\
+                         \frac{\sqrt{3}}{2} & \frac{1}{2}
+                       \end{bmatrix}
+                \]
+            \item for \( V\):
+                \(\theta_v = -\frac{\pi}{4}\)\\
+                \[
+                    V =\begin{bmatrix}
+                        \cos(\frac{\pi}{3}) & -\sin(\frac{\pi}{3})\\
+                        \sin(\frac{\pi}{3}) & -\cos(\frac{\pi}{3})\\
+                      \end{bmatrix}
+                     = \begin{bmatrix}
+                         \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2} \\
+                         -\frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2}
+                       \end{bmatrix}
+                \]
+        \end{itemize}
+    \item \textbf{Solution:}\\
+        Finally, let's explain the gemetric intuition behind the singular value decomposition matrix: \\
+        First, \(V^T\) rotates the input space by \(-\pi/4\), then it scales the input space by \(4\) in r
+        rotated x direction and \(1/2\) in rotated y direction\\
+        Then it rotates again by \(\pi/3\) clockwise to final position
+\end{enumerate}
+

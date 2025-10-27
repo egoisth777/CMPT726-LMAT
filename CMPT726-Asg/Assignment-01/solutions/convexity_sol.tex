@@ -1,0 +1,169 @@
+\subsection{Taylor Expansions}
+
+\begin{enumerate}
+    \item \textbf{Solution:} \\
+        Gradient of \(f\) can be computed by:\\
+        \(\nabla{f} = <4x_1, 2x_2 + 2x_3, 2x_3 + 2x_2>\)\\ 
+        Hessian of \(f\):\\
+        \[
+        H =     
+            \begin{bmatrix}
+                4 & 0 & 0\\
+                0 & 2  & 2\\
+                0 & 2  & 2
+            \end{bmatrix}
+        \]
+
+    \item \textbf{solution:}\\
+    The second order Taylor expansion of \(f(x)\) at point \(x_0\) is given by:
+    \[
+    f(x) \approx f\left(x_0\right)+\nabla f\left(x_0\right)^T\left(x-x_0\right)+\frac{1}{2}\left(x-x_0\right)^T H_f\left(x_0\right)\left(x-x_0\right)
+    \]
+    
+    Given the result from part(a), we will evaluate this expression at point \(x_0 =(0, 0, 0)\).
+    
+    Substituting these values into the Taylor expansion formula, with \(x-x_0=x\):
+    \begin{align*}
+            f(x) &\approx 0+\left[\begin{array}{lll}
+            0 & 0 & 0
+            \end{array}\right]\left[\begin{array}{l}
+            x_1 \\
+            x_2 \\
+            x_3
+            \end{array}\right]+\frac{1}{2}\left[\begin{array}{lll}
+            x_1 & x_2 & x_3
+            \end{array}\right]\left[\begin{array}{lll}
+            4 & 0 & 0 \\
+            0 & 2 & 2 \\
+            0 & 2 & 2
+            \end{array}\right]\left[\begin{array}{l}
+            x_1 \\
+            x_2 \\
+            x_3
+            \end{array}\right] \\
+            f(x) &\approx \frac{1}{2}\left(4 x_1^2+2 x_2^2+4 x_2 x_3+2 x_3^2\right) \\
+            f(x) &\approx 2 x_1^2+x_2^2+2 x_2 x_3+x_3^2
+    \end{align*}
+    \item \textbf{solution:}\\
+    We know that: \\
+    A function is convex if its Hessian is positive semi-definite everywhere\\
+    It is strictly convex if its Hessian is positive definite everywhere\\
+    
+    To determine this, we find the eigenvalues of the Hessian matrix $H_f$.
+
+    $$
+    H_f=\left[\begin{array}{lll}
+    4 & 0 & 0 \\
+    0 & 2 & 2 \\
+    0 & 2 & 2
+    \end{array}\right]
+    $$
+
+
+The eigenvalues $\lambda$ are found by solving $\operatorname{det}\left(H_f-\lambda I\right)=0$ :
+
+    $$
+    \begin{gathered}
+    \operatorname{det}\left[\begin{array}{ccc}
+    4-\lambda & 0 & 0 \\
+    0 & 2-\lambda & 2 \\
+    0 & 2 & 2-\lambda
+    \end{array}\right]=0 \\
+    (4-\lambda)[(2-\lambda)(2-\lambda)-(2)(2)]=0 \\
+    (4-\lambda)\left[\left(4-4 \lambda+\lambda^2\right)-4\right]=0 \\
+    (4-\lambda)\left(\lambda^2-4 \lambda\right)=0 \\
+    (4-\lambda) \lambda(\lambda-4)=0
+    \end{gathered}
+    $$
+
+The eigenvalues are $\lambda_1=4, \lambda_2=4$, and $\lambda_3=0$.
+
+Therefore, since:
+A matrix is positive semi-definite if all its eigenvalues are non-negative, it is positive definite if all its eigvenvalues are strictly positive\\
+The Hessian Matrix \(H_f\) is positive semi-definite but not positive definite. \\
+Therefore, the function is \textbf{convex} but \textbf{not strictly convex}
+    
+\end{enumerate}
+
+\subsection{Matrix Rank and Inverse}
+
+\begin{enumerate}
+    \item \textbf{Solution:}\\
+        WTS:  \(Ax = 0 \iff x = 0\) \\
+    \(\Rightarrow\):\\
+    can write \(Ax = 0\) as the linear combination of columns of A:\\
+    \[
+        x_1a_1 + x_2a_2 + \cdots +  x_na_n = 0
+    \]
+    Since \(A\) is full rank, its \(n\) columns are all linearly independent\\
+    Therefore, by the definition of linearly independent, the only way for the above equation to be true is if all coefficients are zero:\\
+    \[
+        x_1 = x_2 = \cdots = x_n = 0
+    \]
+    which means \(x=0\).\\
+    \(\Leftarrow\):\\
+    If \(x=0\), then it is trivial that \(Ax = A0 = 0\).
+    
+    \item \textbf{Solution:}\\
+    Now let's prove that \(A^TA\) is positive definite 
+    To prove this, let's evaluate the expression:\\
+    \[
+        x^T (A^T A) x 
+    \]
+    \(\forall x \in \mathbb{R}^n, x \neq \vec{0}\)
+    
+    \begin{align*}
+        x^T(A^TA)x  &= (x^TA^T)(Ax)\\
+                    &= (Ax)^T(Ax) \\
+                    &= ||Ax||^{2}
+    \end{align*}
+    \(||Ax||^{2}\) is 0 \(\iff\) \(Ax = 0\)\\
+    From part a, we have shown that \(\forall x \neq 0\),  \(Ax \neq 0\)\\
+    Therefore, for any non-zero vector \(x\), the vector \(Ax\) will also be non-zero \\
+    This means that its squared form is strictly positive:\\
+    \[
+     ||Ax||^2 > 0
+    \]
+    Therefore, it means that \(x^T(A^TA)x > 0\) for all \(x \neq 0\).\\
+    Therefore, \(A^TA\) is \textbf{positive definite}
+    
+    WTS: \textbf{Symmetric Positive Definite Matrix is Always Invertible}\\
+    From the previous part b, we have shown that \(A^TA\) is \textbf{positive definite}
+    Note that \(A^TA\) is always symmetric by Matrix Multiplication and definition of Transpose\\
+    \\
+    Let $M$ be a symmetric positive definite matrix. By the spectral theorem, it has an eigendecomposition $M=Q \Lambda Q^{\top}$, where:
+    \begin{itemize}
+        \item $Q$ is an orthogonal matrix ( $Q^{\top} Q=I$ ) whose columns are the eigenvectors of $M$.
+        \item $\Lambda$ is a diagonal matrix containing the positive eigenvalues $\lambda_i$ of $M$.
+    \end{itemize}
+
+    We can construct the inverse $M^{-1}$ as follows:
+
+    $$
+    M^{-1}=Q \Lambda^{-1} Q^{\top}
+    $$
+
+
+    The inverse of the diagonal matrix, $\Lambda^{-1}$, exists because all its diagonal entries $\lambda_i$ are non-zero. $\Lambda^{-1}$ is simply a diagonal matrix with entries $1 / \lambda_i$.
+    Let's verify this is the correct inverse:
+
+    $$
+        \begin{gathered}
+        M M^{-1}=\left(Q \Lambda Q^{\top}\right)\left(Q \Lambda^{-1} Q^{\top}\right) \\
+        =Q \Lambda\left(Q^{\top} Q\right) \Lambda^{-1} Q^{\top} \\
+        =Q \Lambda(I) \Lambda^{-1} Q^{\top} \\
+        =Q\left(\Lambda \Lambda^{-1}\right) Q^{\top} \\
+        =Q(I) Q^{\top} \\
+        =Q Q^{\top}=I
+        \end{gathered}
+    $$
+    
+    Same logic applied to showing \(M^{-1}M = I\). 
+    
+    Therefore, since we can always compose an inverse of \(M\) by eigendecomposition, which means that \(M\) is \textbf{invertible}.
+    
+    Therefore, we have shown that any symmetric positive definite matrix is always invertible by using eigendecomposition to construct the inverse.
+    
+    Since we have previously shown that \(A^TA\) is positive definite and \(A^TA\) is symmetric by definition, \(A^TA\) is invertible.
+    
+\end{enumerate}

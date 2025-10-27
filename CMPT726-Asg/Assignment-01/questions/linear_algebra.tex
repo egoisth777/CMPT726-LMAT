@@ -1,0 +1,21 @@
+\subsection{Taylor Expansions}
+Given $\vv{x} = \begin{bmatrix} x_1 \\ x_2 \\ x_3\end{bmatrix}$, consider a nonlinear function $f: \mathbb{R}^3 \longrightarrow \mathbb{R}$ as follows:
+\begin{equation}
+    f(\vv{x}) = 2 x_1^2 + x_2^2 + x_3^2 + 2 x_2 x_3
+\end{equation}
+\begin{enumerate}
+\item Compute the \textbf{Gradient} and \textbf{Hessian matrix} of $f$.
+
+\item Find the \textbf{second order Taylor Expansion} at the point $(x_1 = 0, x_2 = 0, x_3 = 0)$.
+
+\item State whether $f$ is \textbf{Convex} or \textbf{Strictly Convex}. Prove your claim.
+
+\end{enumerate}
+
+\subsection{Matrix Rank and Inverse}
+Prove that if $A \in \mathbb{R}^{m \times n}$, with $m\ge n$, is full rank, then $A^\top A$ is invertible via the following steps:
+\begin{enumerate}
+    \item Prove that $A\vv x = \vv 0$ if and only if $\vv x = \vv 0$. 
+    \item Prove that $A^\top A$ is positive definite.
+    \item Prove that any symmetric positive definite matrix is always invertible by using Eigendecomposition to construct the inverse.
+\end{enumerate}

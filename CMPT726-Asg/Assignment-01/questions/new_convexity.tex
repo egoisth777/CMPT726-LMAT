@@ -1,0 +1,46 @@
+
+For any $\vv{x}, \vv{y} \in \mathbb{R}^{n}$ and any $t \in [0,1]$, a function $f$ is said to be convex if it satisfies any of these conditions:
+\begin{itemize}
+\item $f(t\vv{x}+(1-t)\vv{y}) \le tf(\vv{x}) + (1-t)f(\vv{y})$ 
+\item If $f$ is differentiable: $f(\vv{y}) \ge f(\vv{x}) + \left(\nabla f(\vv{x})\right)^\top  (\vv{y} - \vv{x})$
+\item If $f$ is twice differentiable: $\mathrm{H} f(\vv{x}) \succeq 0$
+\end{itemize}
+
+\begin{enumerate}
+\item Given $x \in \mathbb{R}$ and \emph{only} using the definition(s) of convex functions above, prove that the \emph{Huber loss} with parameter $\delta>0$,
+\[
+\mathrm{Huber}_\delta(x)\ :=\
+\begin{cases}
+\frac{1}{2}x^2, & |x|\le \delta,\\[4pt]
+\delta|x|-\frac{1}{2}\delta^2, & |x|>\delta,
+\end{cases}
+\]
+is convex.
+
+\color{black}
+\item Given $A \in \mathbb{R}^{n \times n}$, $\vv{x} \in \mathbb{R}^{n}$, $\vv{b} \in \mathbb{R}^{n}$, and $\lambda \ge 0$, prove that
+\[
+f(\vv{x}) \;=\; \left\| A\vv{x} + \vv{b}\right\|_2 \;+\; \lambda \left\| \vv{x}\right\|_\infty
+\]
+is convex. For this part, you may use the following properties of convex functions:
+\begin{itemize}
+\item $\sum_i w_i f_i(\vv{x})$ is convex if $f_i$ are convex and $w_i \ge 0$.
+\item For any $A \in \mathbb{R}^{n \times n}$ and $\vv{b} \in \mathbb{R}^{n}$, $f(A\vv{x}+\vv{b})$ is convex if $f$ is convex.
+\item $g(f(\vv{x}))$ is convex if $f$ is convex and $g$ is convex and non-decreasing.
+\end{itemize}
+You may also use the triangle inequality and positive homogeneity for norms:
+\[
+\| \vv{u}+\vv{v}\|\le\|\vv{u}\|+\|\vv{v}\|, \qquad \|\alpha\,\vv{u}\|=|\alpha|\,\|\vv{u}\| \ \ (\alpha\in\mathbb{R}).
+\]
+\emph{Hint:} First show that any norm is convex using these two properties; in particular, both the $2$-norm and the $\infty$-norm are convex. Then combine with the properties above.
+
+\color{black}
+\item Given $x \in \mathbb{R}$, consider the \emph{Swish} activation
+\[
+f(x)\;=\;x\,\sigma(x)\;=\;\frac{x}{1+e^{-x}},
+\]
+widely used in deep learning. Prove that $f$ is neither convex nor concave on $\mathbb{R}$ (i.e., both $f$ and $-f$ fail to be convex).
+
+\emph{Hint:} You may use that $\sigma'(x)=\sigma(x)\bigl(1-\sigma(x)\bigr)$ and verify that $f''(x)$ changes sign on $\mathbb{R}$.
+\color{black}
+\end{enumerate}
