@@ -1,0 +1,143 @@
+\section{Bayesian Regression, Information Measures, and the Bias--Variance Trade-off}
+
+As discussed in the course, a viewpoint in statistical learning is the Bayesian perspective, where we place a prior distribution over the parameters we wish to estimate. In this question, you will revisit the same linear regression problem from this Bayesian standpoint to gain deeper insight into the underlying principles of probabilistic modeling.
+
+In the Bayesian framework, we treat model parameters $\overrightarrow{w}$ as random variables and express our beliefs about them probabilistically. 
+Bayes' theorem provides the foundation for updating these beliefs after observing data $\mathcal{D}$:
+
+$$
+p(\overrightarrow{w} \mid \mathcal{D}) = \frac{p(\mathcal{D} \mid \overrightarrow{w}) \, p(\overrightarrow{w})}{p(\mathcal{D})}.
+$$
+
+Here,
+\begin{itemize}
+    \item $p(\overrightarrow{w})$ is the \textbf{prior}, representing our belief about the parameters before seeing any data.
+    \item $p(\mathcal{D} \mid \overrightarrow{w})$ is the \textbf{likelihood}, describing how probable the observed data are under given parameters.
+    \item $p(\mathcal{D}) = \int p(\mathcal{D} \mid \overrightarrow{w}) p(\overrightarrow{w}) \, d\overrightarrow{w}$ is the \textbf{evidence} or \textbf{marginal likelihood}, acting as a normalizing constant.
+    \item $p(\overrightarrow{w} \mid \mathcal{D})$ is the \textbf{posterior}, capturing our updated belief about the parameters after observing data.
+\end{itemize}
+
+This formulation elegantly combines prior knowledge and observed evidence to yield a coherent probabilistic description of parameter uncertainty.
+
+
+Consider a Bayesian linear regression model for a scalar output $y$ and feature vector $\overrightarrow{x} \in \mathbb{R}^d$.  
+Assume a Gaussian likelihood with fixed noise variance $\sigma^2$:
+\[
+p(y \mid \overrightarrow{x}, \overrightarrow{w}) = \mathcal{N}(y \,|\, \overrightarrow{w}^\top \overrightarrow{x},\, \sigma^2),
+\]
+and a zero-mean isotropic Gaussian prior on the weight vector:
+\[
+p(\overrightarrow{w}) = \mathcal{N}(\overrightarrow{w} \,|\, 0,\, \tau^{-1} I),
+\]
+where $\tau > 0$ is the prior precision (inverse variance).  
+Let $D = \{(\overrightarrow{x_i},y_i)\}_{i=1}^N$ be the training data, $X$ the design matrix (a matrix that stacks all your input feature vectors for the training set), and $\overrightarrow{w}_{\mathrm{MAP}}$ the maximum a posteriori estimate of $\overrightarrow{w}$. In the following, $y$ refers to the output corresponding to a single input $\overrightarrow{x}$,  
+while $\overrightarrow{y}$ denotes the concatenation of outputs for multiple inputs (i.e., for the dataset $X$).
+We explore probabilistic regression, information-theoretic measures, and the bias--variance trade-off in this Bayesian setting.
+
+\begin{enumerate}
+
+\item \textbf{Posterior Derivation:}  
+Derive the posterior distribution $p(\overrightarrow{w} \mid D)$ for the Bayesian linear regression model.  
+Show that the posterior is Gaussian $p(\overrightarrow{w}\mid D) = \mathcal{N}\big(\overrightarrow{w} \,|\, \overrightarrow{m}_N,\, S_N\big)$, and give expressions for the posterior mean $\overrightarrow{m}_N$ and covariance $S_N$ in terms of $X$, $\overrightarrow{y}$, $\sigma^2$, and $\tau$ \textbf{(6 marks)}.  
+
+\textit{Hint:} Complete the square in the exponent combining the Gaussian prior and likelihood.  
+You should find that:
+\[
+S_N^{-1} = \tau I + \frac{1}{\sigma^2}X^\top X, \quad \overrightarrow{m_N} = S_N \frac{1}{\sigma^2}X^\top \overrightarrow{y}.
+\]
+
+\item \textbf{Predictive Distribution:}  
+Derive the predictive distribution $p(y_* \mid \overrightarrow{x_*}, D)$ for a new input $\overrightarrow{x_*}$.  
+Show that by marginalizing out $w$, the predictive is Gaussian:
+\[
+p(y_* \mid \overrightarrow{x_*},D) = \mathcal{N}\!\Big(y_* \,|\, \mu_*,\, \sigma_*^2\Big),
+\]
+with mean $\mu_* = \overrightarrow{m}_N^\top \overrightarrow{x_*}$ and variance $\sigma_*^2 = \sigma^2 + \overrightarrow{x_*}^\top S_N \overrightarrow{x_*}$. 
+Explain how the Bayesian predictive is connected to Maximum a Posterior (MAP) predictor? Also interpret $\overrightarrow{x_*}^\top S_N \overrightarrow{x_*}$ term in variance of predictive distribution? What does it measure? \textbf{(6 marks)}
+
+%Interpret how the Bayesian predictive mean coincides with the MAP predictor, while the predictive variance has two components---the noise variance $\sigma^2$ and an uncertainty term $x_*^\top S_N x_*$ due to parameter posterior variance.
+
+\item \textbf{Entropy of Predictions:}  
+Using your result from previous sections, compute the differential entropy of the predictive distribution at a given $\overrightarrow{x}_*$.  
+Simplify your answer to show that:
+\[
+H[p(y_* \mid \overrightarrow{x_*},D)] = \frac{1}{2}\ln(2\pi e\,\sigma_*^2),
+\]
+where $\sigma_*^2$ is the predictive variance.  
+Briefly interpret this result: how does the entropy (a measure of uncertainty) depend on the location $\overrightarrow{x_*}$?  
+What happens to the entropy if $\overrightarrow{x_*}$ is in a region far from the training data versus a region well-supported by data? \textbf{(3 marks)}
+
+
+\item \textbf{Variational View and the MAP--KL Connection:}
+Variational inference (VI) provides a general framework for approximating the posterior by minimizing a divergence between a tractable distribution $q(\overrightarrow{w})$ and the true posterior:
+\[
+q^\star = \arg\min_{q\in\mathcal{Q}} \mathrm{KL}\!\big(q(\overrightarrow{w})\,\|\,p(\overrightarrow{w}\mid D)\big),
+\quad\text{where}\quad
+p(\overrightarrow{w}\mid D) \propto p(\overrightarrow{w})\prod_{i=1}^N p(y_i\mid \overrightarrow{x_i},\overrightarrow{w}).
+\]
+
+
+Let $\mathcal{Q} = \{\delta(\overrightarrow{w}-\overrightarrow{\mu})\,:\,\overrightarrow{\mu}\in\mathbb{R}^d\}$ be the family of point-mass (Dirac) distributions---formally, the limit of $q_{\overrightarrow{\mu}}(\overrightarrow{w}) = \mathcal{N}(\overrightarrow{w}|\overrightarrow{\mu},\varepsilon I)$ as $\varepsilon \to 0$.  
+Show the following \textbf{(4 marks)}. 
+\[
+\arg\min_{\overrightarrow{\mu}}\ \mathrm{KL}\!\big(\delta(\overrightarrow{w}-\overrightarrow{\mu})\,\|\,p(\overrightarrow{w}\mid D)\big)
+\;=\;
+\arg\max_{\overrightarrow{\mu}}\ \log p(\overrightarrow{\mu}\mid D)
+\;=\; \overrightarrow{w}_{\mathrm{MAP}}.
+\]
+\textit{Hint:} Use the identity $\mathrm{KL}(q\|p)=\mathbb{E}_q[\log q-\log p]$, and note that the $\mathbb{E}_q[\log q]$ term does not depend on $\overrightarrow{\mu}$ when the variance is fixed; in the Dirac limit, $\mathbb{E}_q[\log p(\overrightarrow{w}\mid D)] = \log p(\overrightarrow{\mu}\mid D)$.  
+
+\iffalse
+\item \textbf{KL Divergence Form of MAP Objective.}
+Define the empirical data distribution $\hat p_D(x,y)=\tfrac{1}{N}\sum_{i=1}^N \delta_{(x_i,y_i)}(x,y)$ and the empirical input distribution $\hat p_X(x)=\tfrac{1}{N}\sum_{i=1}^N \delta_{x_i}(x)$.  
+Show that
+\[
+\frac{1}{N}\sum_{i=1}^N \log p(y_i\mid x_i,w)
+=
+-\mathrm{KL}\!\big(\hat p_D(x,y)\,\big\|\,\hat p_X(x)\,p(y\mid x,w)\big)
++\text{const},
+\]
+and using $\log p(w\mid D)=\sum_i \log p(y_i\mid x_i,w)+\log p(w)-\log p(D)$, conclude that
+\[
+w_{\mathrm{MAP}}
+\in \arg\min_{w}\;
+\mathrm{KL}\!\big(\hat p_D(x,y)\,\big\|\,\hat p_X(x)\,p(y\mid x,w)\big)
+\;+\; \frac{1}{N}\big(-\log p(w)\big)
+\quad (+\ \text{const}).
+\]
+Interpret $-\log p(w)$ as a prior-induced regularizer (e.g., Gaussian prior $\Rightarrow$ $\ell_2$ penalty; Laplace prior $\Rightarrow$ $\ell_1$ penalty).
+\end{enumerate}
+
+\fi
+
+\item \textbf{Bias--Variance Trade-off:}  
+Let the true regression function be $f(\overrightarrow{x}) = \mathbb{E}[y \mid \overrightarrow{x}]$, and assume the observation noise has variance $\mathrm{Var}(y \mid \overrightarrow{x})$.  
+Given a learning algorithm $L$ a dataset $\mathcal{D}$, the learned parameters are $\overrightarrow{w^*}$ and the predictor is
+\[
+f(\overrightarrow{x}; \overrightarrow{w^*}(\mathcal{D}, L)).
+\]
+Then, the expected prediction error at point $\overrightarrow{x}$ is:
+\[
+\epsilon(\overrightarrow{x}, f, L)
+= \mathbb{E}_{y, \mathcal{D}}\!\left[\big(f(\overrightarrow{x}; \overrightarrow{w^*}(\mathcal{D}, L)) - y\big)^2 \mid \overrightarrow{x}\right].
+\]
+This can be decomposed as:
+\[
+\epsilon(\overrightarrow{x}, f, L)
+= \underbrace{\left(\mathbb{E}_{\mathcal{D}}\!\left[f(\overrightarrow{x}; \overrightarrow{w^*}(\mathcal{D}, L)) \mid \overrightarrow{x}\right]
+- \mathbb{E}_y[y \mid \overrightarrow{x}]\right)^2}_{\text{Bias}^2}
++ \underbrace{\mathrm{Var}\!\left(f(\overrightarrow{x}; \overrightarrow{w^*}(\mathcal{D}, L)) \mid \overrightarrow{x}\right)}_{\text{Variance}}
++ \underbrace{\mathrm{Var}(y \mid \overrightarrow{x})}_{\text{Irreducible Error}}.
+\]
+
+\begin{enumerate}
+    \item [i.] Provide a derivation of this bias--variance decomposition for mean-squared error \textbf{(3 marks)}.
+    \item [ii.] Discuss how the Bayesian regression model balances bias and variance.  
+    What role does the prior precision $\tau$ play in this trade-off?  
+    What happens in the limits of an extremely informative prior ($\tau \to \infty$) versus an uninformative prior ($\tau \to 0$)?  
+    Describe the qualitative effect on bias and variance in predictions \textbf{(2 marks)}.
+\end{enumerate}
+
+\end{enumerate}
+
+

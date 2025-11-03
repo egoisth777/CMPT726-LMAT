@@ -1,0 +1,59 @@
+\section{Linear Regression}\label{sec:q1}
+\begin{enumerate}
+\item \textbf{\em Gaussian Noise Regression Model}
+
+Consider a simple regression model with a noise variable $\epsilon$ as follows:
+$\hat{y} = \vec{w}^{\top} \vec{\phi}(\vec{x}) + \epsilon$, where 
+$\vec{x} \in \mathcal{R}^{M},  y_{i} \in \mathcal{R}$,  $\vec{\phi}$ is the basis function and $\vec{w}$ is the coefficients vector. Assume that $\epsilon$ follows a Gaussian distribution. 
+
+Now consider a data set of inputs $\mathbf{X} = {\vec{x}_1, . . . , \vec{x}_N}$ with corresponding target values $y_1, . . . , y_N$. Unlike Gaussian noise with the same value of variance at every training data point, consider that there is a different value of noise variance at each training data point. 
+
+The probability density function with different variances is given below:
+
+\begin{eqnarray}
+p(y|\mathbf{X}, \vec{w}, \sigma) = \prod_{i=1}^{N} \mathcal{N} (y_i|\vec{w}^{\top} \vec{\phi}(\vec{x}),\sigma_i^{-1})
+\end{eqnarray}
+
+where $\sigma_i$ is the inverse variance.
+
+In this scenario, solve the following:
+
+\begin{enumerate}[label=(\roman*)]
+\item Derive the log likelihood of $p(y|\mathbf{X}, \vec{w}, \sigma)$. Please show the detailed expression of $\mathcal{N} (y_i|\vec{w}^{\top} \vec{\phi}(\vec{x}),\sigma_i^{-1})$, $\ln{\mathcal{N} (y_i|\vec{w}^{\top} \vec{\phi}(\vec{x}),\sigma_i^{-1})}$, and the $\ln{p(y|\mathbf{X}, \vec{w}, \sigma)}$ clearly in your solutions. (\textbf{9 marks})
+\item Comment on the relationship between the sum of squared error function and the log likelihood of $p(y|\mathbf{X}, \vec{w}, \sigma)$. (\textbf{3 marks})
+\end{enumerate}
+
+\item \textbf{\em Weighted Linear Regression}
+\label{sec1}
+
+Given training data of the form: $
+\mathcal{D}=(\mathbf{X}, \vec{y})=\left\{\left(\vec{x}_{i}, y_{i}\right)\right\}, i=1,2, \ldots, N,$ where 
+$\vec{x}_{i} \in \mathcal{R}^{M}, \text { i.e. } \vec{x}_{i}=\left(x_{i, 1}, \cdots, x_{i, M}\right)^{\top}, y_{i} \in \mathcal{R}, \mathbf{X} \in \mathcal{R}^{N \times M},$ 
+where row $i$ of $\vec{X}$ is 
+$\mathbf{x}_i^{\top},$ and 
+$\vec{y}=\left(y_{1}, \cdots, y_{N}\right)^{\top}$. Linear regression assumes a parametric model of the form: 
+$\hat{y}_{i}=\vec{w}^{\top}\vec{x}_{i}+\epsilon_{i}$
+where $\epsilon_{i}$ are
+noise terms from a given distribution, and seeks to find the parameter vector $\vec{w}$ that
+provides the best fit of the above regression model. One criterion to measure fitness is to find $\vec{w}$
+that minimizes a given loss function $\mathcal{J}(\vec{w})$. We have shown that if we take the loss function
+to be the square error, i.e.:
+$$
+\mathcal{J}(\vec{w})=\sum_{i}\left(y_{i}-\vec{w}^{\top}\vec{x}_{i}\right)^{2}=(\mathbf{X} \vec{w}-\vec{y})^{\top}(\mathbf{X} \vec{w}-\vec{y})
+$$
+Then,
+\begin{equation}
+\label{eq1}
+    \vec{w}^{*}=\left(\mathbf{X}^{\top} \mathbf{X}\right)^{-1} \mathbf{X}^{\top} \vec{y}
+\end{equation}
+
+\begin{enumerate}[label=(\roman*)]
+    \item Now we assume that $\epsilon_{1}, \ldots, \epsilon_{N}$ are independent and each $\epsilon_{i} \sim \mathcal{N}\left(0, \sigma_{i}^{2}\right)$. Write down the formula for the MLE of $\vec{w}$: \( \vec{w}_{M L E}=\arg \min _{\vec{w}}(\text{You need to fill here})\). Please use \(\sigma_i, \exp, y_i, x_i, \vec{w}\) instead of \(\mathcal{N}()\). (\textbf{3 marks})
+    \item Calculate the MLE of $\vec{w}$ based on last question. Please show the following items:
+    \begin{enumerate}
+        \item The detailed expression of the MLE of $\vec{w}$ in matrix notation after ignoring derivative-irrelevant items. You may define a new matrix (vector) if needed. (\textbf{3 marks})
+        \item The process of computing derivatives. (\textbf{3 marks})
+        \item The final result in matrix notation. (\textbf{3 marks})
+    \end{enumerate}
+\end{enumerate}
+\end{enumerate}

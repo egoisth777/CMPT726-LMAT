@@ -1,0 +1,86 @@
+\documentclass[12pt]{article}
+\usepackage{myfullpage}
+\usepackage{fancyhdr}
+\usepackage{paralist}
+\usepackage{amsmath}
+\usepackage{url}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\usepackage{times}
+\usepackage{sectsty}
+\usepackage{xcolor}
+\usepackage{esvect}
+\usepackage{float}
+
+\sectionfont{\normalsize\bf}
+\subsectionfont{\normalsize\bf}
+\usepackage{listings}
+\lstset{
+  language=bash,
+  basicstyle=\ttfamily
+}
+
+
+\input defs.tex
+
+\pagestyle{fancyplain}
+\rhead{Instructor: Mo Chen}
+\lhead{CMPT 726: Assignment 2}
+%\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+%\thispagestyle{empty}
+
+\subsection*{Assignment 2}
+\Heading{Due November 03, 2025 at 11:59pm}
+
+
+{\bf This assignment is to be done individually.}
+
+\rule{\textwidth}{1mm}
+
+{\bf Important Note:} The university policy on academic dishonesty
+(cheating) will be taken very seriously in this course.  You may not
+provide or use any solution, in whole or in part, to or by another
+student.
+
+You are encouraged to discuss the concepts involved in the questions
+with other students.  If you are in doubt as to what constitutes
+acceptable discussion, please ask!  Further, please take advantage of
+office hours offered by the instructor and the TA if you are having
+difficulties with this assignment.
+
+{\bf DO NOT}:
+
+\begin{asparaitem}
+\item Give/receive code or proofs to/from other students
+\item Use Google to find solutions for assignment
+\end{asparaitem}
+
+
+{\bf DO}:
+
+\begin{asparaitem}
+\item Meet with other students to discuss assignment (it is best not to take any notes during such meetings, and to re-work assignment on your own)
+\item Use online resources (e.g.~Wikipedia) to understand the concepts needed to solve the assignment.
+\end{asparaitem}
+
+\rule{\textwidth}{1mm}
+
+\section*{Submitting Your Assignment}
+
+The assignment must be submitted online on Canvas.
+You must submit a report in {\bf PDF format}. You may typeset your assignment in LaTeX or Word, or submit neatly handwritten and scanned solutions. We will not be able to give credit to solutions that are not legible.
+
+\rule{\textwidth}{1mm}
+
+\newpage
+
+\input{questions/q1}
+\input{questions/q2}
+\input{questions/q3}
+
+\end{document}
